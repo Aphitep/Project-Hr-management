@@ -1,10 +1,11 @@
 using Api.DB;
+using Api.Dtos;
 using Api.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Api.Service;
 
-class EmployeeService
+public class EmployeeService
 {
     private readonly contextDb _context;
 
@@ -23,15 +24,23 @@ class EmployeeService
         return await _context.Employees.FindAsync(id);
     }
 
-    public async Task<Employee> CreateEmployeeAsync(Employee employee)
+    public async Task<Employee> CreateEmployeeAsync(CreateEmployeesDto employee)
     {
-        employee.CreatedAt = DateTime.UtcNow;
-        _context.Employees.Add(employee);
+        var newEmployee = new Employee
+        {
+            FirstName = employee.FirstName,
+            LastName = employee.LastName,
+            Email = employee.Email,
+            Salary = employee.Salary,
+            CreatedAt = DateTime.UtcNow
+        };
+
+        _context.Employees.Add(newEmployee);
         await _context.SaveChangesAsync();
-        return employee;
+        return newEmployee;
     }
 
-    public async Task<Employee?> UpdateEmployeeAsync(int id, Employee updatedEmployee)
+    public async Task<Employee?> UpdateEmployeeAsync(int id, UpdateEmployeesDto updatedEmployee)
     {
         var existingEmployee = await _context.Employees.FindAsync(id);
         if (existingEmployee == null)
@@ -39,10 +48,10 @@ class EmployeeService
             return null;
         }
 
-        existingEmployee.FirstName = updatedEmployee.FirstName;
-        existingEmployee.LastName = updatedEmployee.LastName;
-        existingEmployee.Email = updatedEmployee.Email;
-        existingEmployee.Salary = updatedEmployee.Salary;
+        existingEmployee.FirstName = updatedEmployee.FirstName ?? existingEmployee.FirstName;
+        existingEmployee.LastName = updatedEmployee.LastName ?? existingEmployee.LastName;
+        existingEmployee.Email = updatedEmployee.Email ?? existingEmployee.Email;
+        existingEmployee.Salary = updatedEmployee.Salary ?? existingEmployee.Salary;
 
         await _context.SaveChangesAsync();
         return existingEmployee;
