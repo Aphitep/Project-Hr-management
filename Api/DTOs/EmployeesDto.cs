@@ -10,7 +10,7 @@ public class CreateEmployeesDto
 
     public decimal Salary { get; set; }
 
-    public DateTime CreatedAt { get; set; }
+    public DateTime? CreatedAt { get; set; }
 }
 
 public class UpdateEmployeesDto
