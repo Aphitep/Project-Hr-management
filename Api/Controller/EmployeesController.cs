@@ -44,4 +44,19 @@ public class EmployeesController : ControllerBase
 
         return CreatedAtAction(nameof(GetEmployee), new { id = employee.Id }, employee);
     }
+
+    [HttpPut("{id}")]
+    public async Task<IActionResult> UpdateEmployee(int id, UpdateEmployeesDto updateEmployeeDto)
+    {
+        var employee = await _employeeService.GetEmployeeByIdAsync(id);
+
+        if (employee == null)
+        {
+            return NotFound();
+        }
+
+        await _employeeService.UpdateEmployeeAsync(id, updateEmployeeDto);
+
+        return CreatedAtAction(nameof(GetEmployee), new { id = employee.Id }, employee);
+    }
 }
