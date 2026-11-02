@@ -1,3 +1,4 @@
+using Api.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Api.DB
@@ -8,5 +9,6 @@ namespace Api.DB
         {
         }
 
+        public DbSet<Employee> Employees { get; set; }
     }
 }
