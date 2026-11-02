@@ -1,6 +1,7 @@
 using Api.DB;
 using Api.Dtos;
 using Api.Models;
+using Api.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,23 +11,23 @@ namespace Api.Controllers;
 [Route("api/[controller]")]
 public class EmployeesController : ControllerBase
 {
-    private readonly contextDb _context;
+    private readonly EmployeeService _employeeService;
 
-    public EmployeesController(contextDb context)
+    public EmployeesController(EmployeeService _service)
     {
-        _context = context;
+        _employeeService = _service;
     }
 
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Employee>>> GetEmployees()
     {
-        return await _context.Employees.ToListAsync();
+        return await _employeeService.GetAllEmployeesAsync();
     }
 
     [HttpGet("{id}")]
     public async Task<ActionResult<Employee>> GetEmployee(int id)
     {
-        var employee = await _context.Employees.FindAsync(id);
+        var employee = await _employeeService.GetEmployeeByIdAsync(id);
 
         if (employee == null)
         {
@@ -39,17 +40,7 @@ public class EmployeesController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<Employee>> CreateEmployee(CreateEmployeesDto createEmployeeDto)
     {
-        var employee = new Employee
-        {
-            FirstName = createEmployeeDto.FirstName,
-            LastName = createEmployeeDto.LastName,
-            Email = createEmployeeDto.Email,
-            Salary = createEmployeeDto.Salary,
-            CreatedAt = createEmployeeDto.CreatedAt
-        };
-
-        _context.Employees.Add(employee);
-        await _context.SaveChangesAsync();
+        var employee = await _employeeService.CreateEmployeeAsync(createEmployeeDto);
 
         return CreatedAtAction(nameof(GetEmployee), new { id = employee.Id }, employee);
     }
