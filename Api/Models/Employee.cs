@@ -14,6 +14,6 @@ public class Employee
 
     public DateTime CreatedAt { get; set; }
 
-    public int DepartmentId { get; set; }
+    public int? DepartmentId { get; set; }
     public Department Department { get; set; } = null!;
 }

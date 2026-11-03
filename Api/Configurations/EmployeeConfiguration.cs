@@ -19,5 +19,6 @@ public class EmployeeConfiguration : IEntityTypeConfiguration<Employee>
                 .WithMany(e => e.Employees)
                 .HasForeignKey(e => e.DepartmentId)
                 .IsRequired();
+
     }
 }
