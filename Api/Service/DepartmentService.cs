@@ -24,7 +24,7 @@ public class DepartmentService
         return await _context.Departments.FindAsync(id);
     }
 
-    public async Task<Department> DepartmentAsync(CreateDepartmentDto departmentDto)
+    public async Task<Department> CreateDepartmentAsync(CreateDepartmentDto departmentDto)
     {
         var newDepartment = new Department
         {
