@@ -10,5 +10,10 @@ public class DepartmentConfiguration : IEntityTypeConfiguration<Department>
     {
         builder.HasKey(d => d.Id);
         builder.Property(d => d.Name).IsRequired().HasMaxLength(100);
+
+        builder.HasMany(e => e.Employees)
+                .WithOne(d => d.Department)
+                .HasForeignKey(d => d.DepartmentId)
+                .IsRequired();
     }
 }

@@ -13,4 +13,7 @@ public class Employee
     public decimal Salary { get; set; }
 
     public DateTime CreatedAt { get; set; }
+
+    public int DepartmentId { get; set; }
+    public Department Department { get; set; } = null!;
 }
