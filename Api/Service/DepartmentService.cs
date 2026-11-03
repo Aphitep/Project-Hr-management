@@ -1,11 +1,12 @@
 using Api.DB;
 using Api.Dtos;
+using Api.IServices;
 using Api.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Api.Service;
 
-public class DepartmentService
+public class DepartmentService : IDepartmentService
 {
     private readonly contextDb _context;
 

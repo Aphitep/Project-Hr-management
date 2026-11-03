@@ -1,4 +1,5 @@
 using Api.Dtos;
+using Api.IServices;
 using Api.Models;
 using Api.Service;
 using Microsoft.AspNetCore.Mvc;
@@ -9,9 +10,9 @@ namespace Api.Controllers;
 [Route("api/[controller]")]
 public class DepartmentController : ControllerBase
 {
-    private readonly DepartmentService _departmentService;
+    private readonly IDepartmentService _departmentService;
 
-    public DepartmentController(DepartmentService departmentService)
+    public DepartmentController(IDepartmentService departmentService)
     {
         _departmentService = departmentService;
     }
