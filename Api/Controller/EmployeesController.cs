@@ -1,5 +1,6 @@
 using Api.DB;
 using Api.Dtos;
+using Api.IServices;
 using Api.Models;
 using Api.Service;
 using Microsoft.AspNetCore.Mvc;
@@ -11,9 +12,9 @@ namespace Api.Controllers;
 [Route("api/[controller]")]
 public class EmployeesController : ControllerBase
 {
-    private readonly EmployeeService _employeeService;
+    private readonly IEmployeeService _employeeService;
 
-    public EmployeesController(EmployeeService _service)
+    public EmployeesController(IEmployeeService _service)
     {
         _employeeService = _service;
     }
