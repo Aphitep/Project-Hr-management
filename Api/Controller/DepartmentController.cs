@@ -43,4 +43,16 @@ public class DepartmentController : ControllerBase
         var department = await _departmentService.CreateDepartmentAsync(createDepartmentDto);
         return CreatedAtAction(nameof(GetDepartment), new { id = department.Id }, department);
     }
+
+    [HttpPut("{id}")]
+    public async Task<ActionResult<Department>> UpdateDepartment(int id, CreateDepartmentDto updateDepartmentDto)
+    {
+        var department = await _departmentService.UpdateDepartmentAsync(id, updateDepartmentDto);
+        if (department == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(department);
+    }
 }
